@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pour Vos Ongles - Plaquette Digitale</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="print-button-container">
+        <button id="printBtn" class="print-btn">🖨️ Imprimer la plaquette</button>
+    </div>
+
+    <div class="plaquette-container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="main-title">Pour Vos Ongles</h1>
+            <p class="subtitle">Prothésiste Ongulaire</p>
+        </header>
+
+        <!-- Section Mains -->
+        <section class="services-section">
+            <h2 class="section-title">Pour Vos Mains</h2>
+            <div class="services-grid">
+                <div class="service-card gel">
+                    <h3>Gel</h3>
+                    <div id="mains-gel-services"></div>
+                </div>
+
+                <div class="service-card semi">
+                    <h3>Semi</h3>
+                    <div id="mains-semi-services"></div>
+                </div>
+
+                <div class="service-card vernis">
+                    <h3>Vernis</h3>
+                    <div id="mains-vernis-services"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Pieds -->
+        <section class="services-section">
+            <h2 class="section-title">Pour Vos Pieds</h2>
+            <div class="services-grid">
+                <div class="service-card gel">
+                    <h3>Gel</h3>
+                    <div id="pieds-gel-services"></div>
+                </div>
+
+                <div class="service-card semi">
+                    <h3>Semi</h3>
+                    <div id="pieds-semi-services"></div>
+                </div>
+
+                <div class="service-card vernis">
+                    <h3>Vernis</h3>
+                    <div id="pieds-vernis-services"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Offre spéciale -->
+        <div class="special-offer">
+            <h3 id="special-offer-text"></h3>
+        </div>
+
+        <!-- Suppléments -->
+        <div class="supplements">
+            <h4>SUPPLÉMENTS:</h4>
+            <div id="supplements-list"></div>
+        </div>
+
+        <!-- Services spéciaux -->
+        <section class="special-services">
+            <div class="service-special">
+                <h3>💅 <span id="nail-art-title"></span></h3>
+                <p class="subtitle-special" id="nail-art-description"></p>
+                <p class="price-special" id="nail-art-price"></p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="contact-info">
+                <div class="social-section">
+                    <p>Rejoignez moi sur les réseaux sociaux pour découvrir mes créations</p>
+                    <p><strong>Pour Vos Ongles à domicile</strong></p>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/pourvosonglesadomicile/" target="_blank" class="social-link facebook" title="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/pourvosonglesadomicile" target="_blank" class="social-link instagram" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="phone-section">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <a href="https://wa.me/33779805584?text=Bonjour, je souhaite prendre rendez-vous" class="phone-number" title="Contacter via WhatsApp">
+                            07 79 80 55 84
+                        </a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span class="location">Service à domicile</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/prices-config.js"></script>
+    <script src="js/price-manager.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

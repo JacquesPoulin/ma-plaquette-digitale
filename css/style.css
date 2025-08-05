@@ -1,0 +1,608 @@
+/* Variables CSS pour une gestion facile des couleurs */
+:root {
+    --pink-primary: #e91e63;
+    --pink-light: #f8bbd9;
+    --pink-dark: #ad1457;
+    --pink-gradient: linear-gradient(135deg, #e91e63, #f06292);
+    --burgundy: #8e1538;
+    --white: #ffffff;
+    --text-dark: #333333;
+    --text-light: #666666;
+    --shadow: rgba(233, 30, 99, 0.2);
+    --border-radius: 15px;
+}
+
+/* Reset et base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background: linear-gradient(135deg, #fce4ec, #f8bbd9);
+    min-height: 100vh;
+}
+
+header {
+    background: #35424a;
+    color: #ffffff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+}
+
+nav {
+    margin: 20px 0;
+}
+
+nav a {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px 15px;
+}
+
+nav a:hover {
+    background: #e8491d;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+footer {
+    background: #35424a;
+    color: #ffffff;
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Bouton d'impression */
+.print-button-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.print-btn {
+    background: var(--pink-gradient);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 4px 15px var(--shadow);
+    transition: all 0.3s ease;
+}
+
+.print-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px var(--shadow);
+}
+
+/* Container principal */
+.plaquette-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin-top: 80px;
+    margin-bottom: 40px;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    padding: 30px 0;
+    background: var(--pink-gradient);
+    color: white;
+    border-radius: var(--border-radius);
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* .header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(255, 255, 255, 0.1) 10px,
+        rgba(255, 255, 255, 0.1) 20px
+    );
+    animation: shimmer 3s linear infinite;
+} */
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%) translateY(-100%); }
+    100% { transform: translateX(100%) translateY(100%); }
+}
+
+.main-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* Sections de services */
+.services-section {
+    margin-bottom: 40px;
+}
+
+.section-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    color: var(--pink-primary);
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: var(--pink-gradient);
+    border-radius: 2px;
+}
+
+/* Grille des services */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+/* Cartes de services */
+.service-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: var(--pink-gradient);
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(233, 30, 99, 0.2);
+}
+
+.service-card.gel {
+    border-left: 5px solid var(--pink-primary);
+}
+
+.service-card.semi {
+    border-left: 5px solid var(--pink-dark);
+}
+
+.service-card.vernis {
+    border-left: 5px solid var(--burgundy);
+}
+
+.service-card h3 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    color: var(--pink-primary);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Items de service */
+.service-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #fafafa;
+    border-radius: 10px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.service-item:hover {
+    background: #f5f5f5;
+    transform: scale(1.02);
+}
+
+.service-item h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price {
+    width: fit-content;
+    background: var(--pink-gradient);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 1rem;
+    box-shadow: 0 2px 10px var(--shadow);
+}
+
+.service-item p {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    line-height: 1.4;
+}
+
+/* Offre spéciale */
+.special-offer {
+    background: var(--pink-gradient);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    margin: 30px 0;
+    box-shadow: 0 5px 20px var(--shadow);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+.special-offer h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* Suppléments */
+.supplements {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    margin: 20px 0;
+    border-left: 5px solid var(--pink-primary);
+}
+
+.supplements h4 {
+    color: var(--pink-primary);
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.supplements p {
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.supplements .price {
+    font-size: 0.9rem;
+    padding: 3px 8px;
+}
+
+/* Services spéciaux */
+.special-services {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+    margin: 40px 0;
+}
+
+.service-special {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.service-special::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(233, 30, 99, 0.1) 0%, transparent 70%);
+    transition: all 0.3s ease;
+    transform: scale(0);
+}
+
+.service-special:hover::before {
+    transform: scale(1);
+}
+
+.service-special:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(233, 30, 99, 0.2);
+}
+
+.service-special h3 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    color: var(--pink-primary);
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+.subtitle-special {
+    font-style: italic;
+    color: var(--text-light);
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+.price-special {
+    color: var(--pink-primary);
+    font-weight: 600;
+    font-size: 1.1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.details {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 1;
+}
+
+.service-image, .nail-art-image {
+    width: 100%;
+    max-width: 200px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-top: 15px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.service-image:hover, .nail-art-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Footer */
+.footer {
+    background: var(--pink-gradient);
+    color: white;
+    padding: 25px 30px;  /* Réduit de 40px à 25px */
+    border-radius: var(--border-radius);
+    margin-top: 40px;
+    text-align: center;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;  /* Réduit de 30px à 20px */
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.social-section {
+    text-align: center;
+}
+
+.social-section p {
+    margin-bottom: 10px;  /* Réduit de 15px à 10px */
+    line-height: 1.4;     /* Réduit de 1.6 à 1.4 */
+    font-size: 0.95rem;   /* Réduit de 1rem à 0.95rem */
+}
+
+/* Icônes sociales plus compactes */
+.social-icons {
+    display: flex;
+    gap: 12px;            /* Réduit de 15px à 12px */
+    justify-content: center;
+    margin-top: 15px;     /* Réduit de 20px à 15px */
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;          /* Réduit de 40px à 35px */
+    height: 35px;         /* Réduit de 40px à 35px */
+    border-radius: 50%;
+    text-decoration: none;
+    color: white;
+    font-size: 1.1rem;    /* Réduit de 1.2rem à 1.1rem */
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.social-link:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.social-link.facebook:hover {
+    background: rgba(24, 119, 242, 0.3);
+    border-color: #1877f2;
+}
+
+.social-link.instagram:hover {
+    background: rgba(225, 48, 108, 0.3);
+    border-color: #e1306c;
+}
+
+.social-link.whatsapp:hover {
+    background: rgba(37, 211, 102, 0.3);
+    border-color: #25d366;
+}
+
+.social-link i {
+    position: relative;
+    z-index: 2;
+}
+
+/* Section contact centrée */
+.phone-section {
+    text-align: center;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;  /* Réduit de 15px à 10px */
+    gap: 10px;            /* Réduit de 12px à 10px */
+}
+
+.contact-item i {
+    font-size: 1.1rem;    /* Réduit de 1.2rem à 1.1rem */
+    color: rgba(255, 255, 255, 0.8);
+    width: 18px;          /* Réduit de 20px à 18px */
+    text-align: center;
+}
+
+.phone-number {
+    font-size: 1.6rem;    /* Réduit de 1.8rem à 1.6rem */
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.phone-number:hover {
+    color: #ffeb3b;
+    transform: scale(1.05);
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
+}
+
+.location {
+    font-size: 0.9rem;    /* Réduit de 1rem à 0.9rem */
+    color: rgba(255, 255, 255, 0.9);
+    font-style: italic;
+}
+
+/* Animation subtile pour les réseaux sociaux */
+.social-link:hover {
+    animation: gentleFloat 0.6s ease-in-out;
+}
+
+@keyframes gentleFloat {
+    0%, 100% { transform: translateY(-3px); }
+    50% { transform: translateY(-6px); }
+}
+
+/* Responsive pour le footer */
+@media (max-width: 768px) {
+    .footer {
+        padding: 30px 20px;
+    }
+    
+    .contact-info {
+        gap: 25px;
+    }
+    
+    .phone-number {
+        font-size: 1.5rem;
+    }
+    
+    .social-icons {
+        gap: 12px;
+    }
+    
+    .social-link {
+        width: 35px;
+        height: 35px;
+        font-size: 1.1rem;
+    }
+}
+
+
+/* Styles pour l'impression */
+@media print {
+    .print-button-container {
+        display: none;
+    }
+    
+    .plaquette-container {
+        margin: 0;
+        box-shadow: none;
+        background: white;
+    }
+    
+    .service-card:hover,
+    .service-special:hover {
+        transform: none;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .service-item:hover {
+        transform: none;
+    }
+    
+    @page {
+        margin: 1cm;
+        size: A4;
+    }
+}
