@@ -36,7 +36,3 @@ L'application est conçue pour être simple et intuitive. Vous pouvez naviguer �
 ## Dépendances
 
 Aucune dépendance externe n'est requise pour ce projet. Il utilise uniquement des technologies web standard.
-
-## Auteurs
-
-Ce projet a été développé par [Votre Nom].
