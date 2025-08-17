@@ -1,40 +1,40 @@
 // Ce fichier contient le code JavaScript pour l'application.
 // Il gère l'interactivité et les comportements dynamiques de la page.
 
-// Configuration des prix - facile à modifier
+// Configuration des prix
 const PRICES = {
 	mains: {
 		gel: {
-			poseComplete: 60,
-			remplissage: 42,
-			kapping: 35,
+			poseComplete: 70,
+			remplissage: 48,
+			kapping: 40,
 			depose: 30,
 		},
 		semi: {
-			semiPermanent: 32,
+			semiPermanent: 38,
 			depose: 30,
 		},
 		vernis: {
-			beauteDesMains: 25,
+			beauteDesMains: 30,
 		},
 	},
 	pieds: {
 		gel: {
-			posePieds: 35,
+			posePieds: 40,
 			depose: 25,
 		},
 		semi: {
-			semiPermanent: 28,
+			semiPermanent: 35,
 			depose: 25,
 		},
 		vernis: {
-			beauteDesPieds: 25,
-			spaDesPieds: 38,
+			beauteDesPieds: 35,
+			spaDesPieds: 50,
 		},
 	},
 	supplements: {
-		limageVernisPieds: 10,
-		limageVernisMains: 10,
+		limageVernisPieds: 15,
+		limageVernisMains: 15,
 		babyBoomer: 10,
 		strassStickers: 1,
 	},
@@ -61,7 +61,7 @@ class PlaquetteDigitale {
 		// Bouton d'impression
 		const printBtn = document.getElementById('printBtn');
 		if (printBtn) {
-			printBtn.addEventListener('click', this.handlePrint.bind(this));
+			printBtn.addEventListener('click', this.handlePrintClean.bind(this)); // Changez ici
 		}
 
 		// Liens sociaux
@@ -74,22 +74,459 @@ class PlaquetteDigitale {
 		this.setupPriceHover();
 	}
 
-	// Gestion de l'impression
-	handlePrint() {
-		// Animation du bouton avant impression
+	// Nouvelle méthode d'impression ultra-épurée
+	handlePrintClean() {
 		const printBtn = document.getElementById('printBtn');
 		printBtn.style.transform = 'scale(0.95)';
-		printBtn.innerHTML = '🖨️ Impression...';
+		printBtn.innerHTML = '🖨️ Génération PDF...';
 
+		// S'assurer que tout le contenu est chargé
+		if (window.priceManager) {
+			window.priceManager.initializePlaquette();
+		}
+
+		// Attendre un peu que le contenu se charge
 		setTimeout(() => {
-			window.print();
+			this.createPrintOnlyPage();
 
-			// Restaurer le bouton après impression
+			// Restaurer le bouton
 			setTimeout(() => {
 				printBtn.style.transform = 'scale(1)';
 				printBtn.innerHTML = '🖨️ Imprimer la plaquette';
-			}, 500);
+			}, 1000);
 		}, 300);
+	}
+
+	// Créer une page dédiée à l'impression
+	createPrintOnlyPage() {
+		const printWindow = window.open('', '_blank', 'width=800,height=600');
+
+		// Récupérer les données de la plaquette
+		const data = this.extractPlaquetteData();
+
+		const printHTML = `
+    <!DOCTYPE html>
+    <html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Pour Vos Ongles - Plaquette Tarifs</title>
+        <style>
+            ${this.getMinimalPrintStyles()}
+        </style>
+    </head>
+    <body>
+        <div class="print-container">
+            <!-- Header minimaliste -->
+            <header class="print-header">
+                <h1>Pour Vos Ongles</h1>
+                <p>Prothésiste Ongulaire • Service à domicile</p>
+            </header>
+
+            <!-- Contenu principal en 2 colonnes -->
+            <div class="print-content">
+                <!-- Colonne gauche -->
+                <div class="print-column">
+                    <section class="print-section">
+                        <h2>🖐️ Mains</h2>
+                        <div class="service-group">
+                            <h3>GEL</h3>
+                            ${this.generateServicesList('mains-gel')}
+                        </div>
+                        <div class="service-group">
+                            <h3>SEMI PERMANENT</h3>
+                            ${this.generateServicesList('mains-semi')}
+                        </div>
+                        <div class="service-group">
+                            <h3>VERNIS</h3>
+                            ${this.generateServicesList('mains-vernis')}
+                        </div>
+                    </section>
+
+                    <section class="print-section">
+                        <h2>🦶 Pieds</h2>
+                        <div class="service-group">
+                            <h3>GEL</h3>
+                            ${this.generateServicesList('pieds-gel')}
+                        </div>
+                        <div class="service-group">
+                            <h3>SEMI PERMANENT</h3>
+                            ${this.generateServicesList('pieds-semi')}
+                        </div>
+                        <div class="service-group">
+                            <h3>VERNIS</h3>
+                            ${this.generateServicesList('pieds-vernis')}
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Colonne droite -->
+                <div class="print-column">
+                    <section class="print-section highlight">
+                        <h2>🎁 Offre Spéciale</h2>
+                        <p class="offer-text">${data.specialOffer}</p>
+                    </section>
+
+                    <section class="print-section">
+                        <h2>💅 Nail Art</h2>
+                        <p class="service-line">Création personnalisée <span class="price">2€/ongle</span></p>
+                    </section>
+
+                    <section class="print-section">
+                        <h2>➕ Suppléments</h2>
+                        ${this.generateSupplementsList()}
+                    </section>
+
+                    <section class="print-section contact">
+                        <h2>📞 Contact</h2>
+                        <p class="phone-big">07 79 80 55 84</p>
+                        <p class="contact-info">WhatsApp • Service à domicile</p>
+                        <p class="social">@pourvosonglesadomicile</p>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            window.onload = function() {
+                setTimeout(() => {
+                    window.print();
+                    window.onafterprint = function() {
+                        window.close();
+                    };
+                }, 500);
+            };
+        </script>
+    </body>
+    </html>`;
+
+		printWindow.document.write(printHTML);
+		printWindow.document.close();
+	}
+
+	// Extraire les données de la plaquette
+	extractPlaquetteData() {
+		return {
+			specialOffer:
+				document.getElementById('special-offer-text')?.textContent ||
+				"10€ OFFERTS LORS D'UNE PRESTATION PIEDS ET MAINS",
+		};
+	}
+
+	// Générer la liste des services de manière compacte
+	generateServicesList(sectionId) {
+		const container = document.getElementById(sectionId + '-services');
+		if (!container) return '';
+
+		const services = container.querySelectorAll('.service-item');
+		let html = '';
+
+		services.forEach((service) => {
+			const title = service.querySelector('h4')?.textContent || '';
+			const price = service.querySelector('.price')?.textContent || '';
+			if (title && price) {
+				// Nettoyer le titre (enlever les détails entre parenthèses pour économiser l'espace)
+				const cleanTitle = title.split('(')[0].trim();
+				html += `<p class="service-line">${cleanTitle} <span class="price">${price}</span></p>`;
+			}
+		});
+
+		return html;
+	}
+
+	// Générer la liste des suppléments
+	generateSupplementsList() {
+		const container = document.getElementById('supplements-list');
+		if (!container) return '';
+
+		const supplements = container.querySelectorAll('p');
+		let html = '';
+
+		supplements.forEach((supplement) => {
+			const text = supplement.textContent;
+			const parts = text.split('...');
+			if (parts.length === 2) {
+				const name = parts[0].trim();
+				const price = parts[1].trim();
+				html += `<p class="service-line">${name} <span class="price">${price}</span></p>`;
+			}
+		});
+
+		return html;
+	}
+
+	// Styles minimalistes pour l'impression
+	getMinimalPrintStyles() {
+		return `
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact !important;
+            color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        @page {
+            size: A4 landscape;
+            margin: 10mm;
+            background: white;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 9pt;
+            line-height: 1.2;
+            color: #333;
+            background: white;
+        }
+
+        .print-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Header ultra-compact */
+        .print-header {
+            text-align: center;
+            background: #e91e63;
+            color: white;
+            padding: 8mm 0;
+            margin-bottom: 5mm;
+        }
+
+        .print-header h1 {
+            font-size: 20pt;
+            font-weight: bold;
+            margin-bottom: 2mm;
+        }
+
+        .print-header p {
+            font-size: 10pt;
+            font-weight: 300;
+        }
+
+        /* Layout 2 colonnes */
+        .print-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8mm;
+            height: calc(100% - 25mm);
+        }
+
+        .print-column {
+            display: flex;
+            flex-direction: column;
+            gap: 4mm;
+        }
+
+        /* Sections */
+        .print-section {
+            background: #fafafa;
+            border: 1pt solid #ddd;
+            border-radius: 3mm;
+            padding: 3mm;
+        }
+
+        .print-section.highlight {
+            background: #e91e63;
+            color: white;
+            border-color: #e91e63;
+        }
+
+        .print-section.contact {
+            background: #f0f8ff;
+            border-color: #e91e63;
+            text-align: center;
+        }
+
+        .print-section h2 {
+            font-size: 11pt;
+            font-weight: bold;
+            color: #e91e63;
+            margin-bottom: 2mm;
+            text-align: center;
+        }
+
+        .print-section.highlight h2 {
+            color: white;
+        }
+
+        .print-section.contact h2 {
+            color: #e91e63;
+        }
+
+        /* Groupes de services */
+        .service-group {
+            margin-bottom: 3mm;
+        }
+
+        .service-group h3 {
+            font-size: 9pt;
+            font-weight: bold;
+            color: #666;
+            margin-bottom: 1mm;
+            text-transform: uppercase;
+            border-bottom: 1pt solid #ddd;
+            padding-bottom: 1mm;
+        }
+
+        /* Lignes de services */
+        .service-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1mm;
+            font-size: 8pt;
+            line-height: 1.1;
+        }
+
+        .price {
+            background: #e91e63;
+            color: white;
+            padding: 1mm 2mm;
+            border-radius: 2mm;
+            font-weight: bold;
+            font-size: 8pt;
+            flex-shrink: 0;
+        }
+
+        /* Offre spéciale */
+        .offer-text {
+            font-weight: bold;
+            font-size: 9pt;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        /* Contact */
+        .phone-big {
+            font-size: 16pt;
+            font-weight: bold;
+            color: #e91e63;
+            margin: 2mm 0;
+        }
+
+        .contact-info {
+            font-size: 8pt;
+            color: #666;
+            margin-bottom: 2mm;
+        }
+
+        .social {
+            font-size: 8pt;
+            font-style: italic;
+            color: #888;
+        }
+
+        /* Optimisations pour tout faire rentrer */
+        @media print {
+            .print-section {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            
+            .service-line {
+                break-inside: avoid;
+            }
+        }
+
+        /* Version encore plus compacte si nécessaire */
+        .service-line:nth-child(n+8) {
+            font-size: 7pt;
+        }
+
+        /* Économie d'espace maximale */
+        .print-column:first-child .service-group:last-child {
+            margin-bottom: 1mm;
+        }
+    `;
+	}
+
+	// Préparation du contenu pour l'impression
+	prepareContentForPrint() {
+		// S'assurer que tout le contenu est chargé
+		if (window.priceManager) {
+			window.priceManager.initializePlaquette();
+		}
+
+		// Ajouter une classe pour l'impression
+		document.body.classList.add('printing-mode');
+
+		// Optimiser les images
+		const images = document.querySelectorAll('img');
+		images.forEach((img) => {
+			img.style.maxWidth = '100%';
+			img.style.height = 'auto';
+			img.style.pageBreakInside = 'avoid';
+		});
+	}
+
+	// Restauration du contenu après l'impression
+	restoreContentAfterPrint() {
+		document.body.classList.remove('printing-mode');
+	}
+
+	// Ajoutez cette méthode dans la classe PlaquetteDigitale
+	// createPrintPreview() {
+	// 	const previewContainer = document.createElement('div');
+	// 	previewContainer.innerHTML = `
+	//     <button id="previewBtn" class="preview-btn" title="Aperçu d'impression">
+	//         👁️ Aperçu
+	//     </button>
+	// `;
+	// 	previewContainer.style.cssText = `
+	//     position: fixed;
+	//     top: 80px;
+	//     right: 20px;
+	//     z-index: 1000;
+	// `;
+
+	// 	const previewBtn = previewContainer.querySelector('#previewBtn');
+	// 	previewBtn.style.cssText = `
+	//     background: #666;
+	//     color: white;
+	//     border: none;
+	//     padding: 10px 15px;
+	//     border-radius: 8px;
+	//     cursor: pointer;
+	//     font-size: 12px;
+	//     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+	// `;
+
+	// 	previewBtn.addEventListener('click', () => {
+	// 		this.showPrintPreview();
+	// 	});
+
+	// 	document.body.appendChild(previewContainer);
+	// }
+
+	showPrintPreview() {
+		const printWindow = window.open('', '_blank', 'width=800,height=600');
+		const currentContent = document.documentElement.outerHTML;
+
+		printWindow.document.write(currentContent);
+		printWindow.document.close();
+
+		// Appliquer les styles d'impression
+		setTimeout(() => {
+			printWindow.document.body.style.background = 'white';
+			printWindow.document.body.classList.add('printing-mode');
+
+			// Masquer les boutons dans l'aperçu
+			const buttonsToHide = printWindow.document.querySelectorAll(
+				'.print-button-container, .price-calculator'
+			);
+			buttonsToHide.forEach((btn) => (btn.style.display = 'none'));
+		}, 100);
+	}
+
+	// N'oubliez pas d'appeler cette méthode dans init()
+	init() {
+		this.setupEventListeners();
+		this.addAnimations();
+		this.setupPriceCalculator();
+		this.addInteractiveEffects();
+		this.createPrintPreview(); // Ajoutez cette ligne
 	}
 
 	// Configuration des liens sociaux
@@ -192,6 +629,7 @@ class PlaquetteDigitale {
 		this.createCalculatorButton();
 	}
 
+
 	createCalculatorButton() {
 		const calculator = document.createElement('div');
 		calculator.className = 'price-calculator';
@@ -205,13 +643,22 @@ class PlaquetteDigitale {
                     <div class="calculator-form">
                         <select id="serviceType">
                             <option value="">Choisir un service</option>
-                            <option value="gel-pose">Gel - Pose complète (60€)</option>
-                            <option value="gel-remplissage">Gel - Remplissage (42€)</option>
-                            <option value="semi-permanent">Semi permanent (32€)</option>
-                            <option value="beaute-mains">Beauté des mains (25€)</option>
+                            <option value="">🖐️ MAINS</option>
+                            <option value="gel-pose-mains">Gel - Pose complète (70€)</option>
+                            <option value="gel-remplissage-mains">Gel - Remplissage mains (48€)</option>
+							<option value="kapping-mains">Kapping mains (40€)</option>
+							<option value="semi-permanent-mains">Semi permanent - Mains (38€)</option>
+							
+                            <option value="">🦶 PIEDS</option>
+							<option value="gel-pose-pieds">Gel - Pose pieds (40€)</option>
+							<option value="semi-permanent-pieds">Semi permanent - Pieds (35€)</option>
+							<option value="vernis-spa-pieds">Vernis - Spa des pieds (50€)</option>
+							<option value="vernis-beaute-pieds">Vernis - Beauté des pieds (35€)</option>
                         </select>
-                        <div class="supplements-section">
+                        <div class="supplements-section" style="display:flex; flex-direction: column; gap: 5px; align-items: center; margin-top: 10px;">
                             <label><input type="checkbox" value="10"> Baby boomer (+10€)</label>
+                            <label><input type="checkbox" value="15"> Limage vernis mains (+15€)</label>
+                            <label><input type="checkbox" value="15"> Limage vernis pieds (+15€)</label>
                             <label><input type="checkbox" value="1"> Strass/Stickers (+1€)</label>
                         </div>
                         <div class="total-section">
@@ -242,7 +689,7 @@ class PlaquetteDigitale {
 			modal.classList.add('hidden');
 		});
 
-		// Calcul en temps réel
+		// ! Calcul en temps réel
 		[serviceSelect, ...supplements].forEach((element) => {
 			element.addEventListener('change', this.calculateTotal.bind(this));
 		});
@@ -257,12 +704,19 @@ class PlaquetteDigitale {
 
 		let total = 0;
 
-		// Prix du service principal
+		// ! Prix du service principal
 		const servicePrices = {
-			'gel-pose': 60,
-			'gel-remplissage': 42,
-			'semi-permanent': 32,
-			'beaute-mains': 25,
+			// mains 
+			'gel-pose-mains': 70,
+			'gel-remplissage-mains': 48,
+			'kapping-mains': 40,
+			'semi-permanent-mains': 38,
+			'vernis-mains': 30,
+			// pieds
+			'gel-pose-pieds': 40,
+			'semi-permanent-pieds': 35,
+			'vernis-spa-pieds': 50,
+			'vernis-beaute-pieds': 35,
 		};
 
 		if (serviceSelect.value) {
