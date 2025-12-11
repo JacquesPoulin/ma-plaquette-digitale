@@ -32,8 +32,7 @@ const PRICES_CONFIG = {
 				label: 'SEMI PERMANENT',
 				description:
 					'Soin des mains (repousse et coupe cuticules, limage et polissage)',
-				extra:
-					'Vernis semi permanent<br>(supplément champagne, crème de marron 5€)',
+				extra: 'Vernis semi permanent',
 			},
 			depose: {
 				price: 30,
@@ -48,7 +47,7 @@ const PRICES_CONFIG = {
 				label: 'BEAUTÉ DES MAINS',
 				description:
 					'Soin des mains complet, hydratation des cuticules, limage et polissage des ongles',
-				extra: 'Vernis Classique<br>(supplément gommage, crème et massage 5€)',
+				extra: 'Vernis Classique',
 			},
 		},
 	},

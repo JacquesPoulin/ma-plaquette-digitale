@@ -10,11 +10,7 @@ class PriceManager {
                 <h4>${service.label}</h4>
                 <span class="price">${service.price}€</span>
                 <p>${service.description}</p>
-                ${
-									service.extra
-										? `<p><strong>${service.extra}</strong></p>`
-										: ''
-								}
+                ${service.extra ? `<p>${service.extra}</p>` : ''}
             </div>
         `;
 	}
